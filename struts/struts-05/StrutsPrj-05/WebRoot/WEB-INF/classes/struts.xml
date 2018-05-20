@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "struts-2.1.7.dtd" >
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.ui.theme" value="simple"/>
+    
+    <constant name="struts.action.extension" value="do"></constant>
+    
+    <package name="base-pkg" abstract="true" extends="struts-default"></package>
+    <package name="login-pkg" namespace="/login" extends="base-pkg">
+    	<interceptors>
+    		<interceptor name="authority" class="edu.fjnu.interceptor.AuthorityInterceptor"/>
+    		<interceptor-stack name="myStack">
+    			<interceptor-ref name="authority"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	<action name="toInput" class="edu.fjnu.action.LoginAction" method="toInput">
+    		<result name="input">/input_login.jsp</result>
+    	</action>
+    	<action name="create" class="edu.fjnu.action.LoginAction" method="create">
+    		<result name="success">/add.jsp</result>
+    		<result name="input">/input_login.jsp</result>
+    	</action>
+    	<action name="add" class="edu.fjnu.action.LoginAction" method="add">
+    		<result name="add">/add.jsp</result>
+    	</action>
+    	<action name="addUser" class="edu.fjnu.action.AddUserAction">
+    		<result name="success">/input_user.jsp</result>
+    		<result name="input">/input_login.jsp</result>
+    		<interceptor-ref name="myStack"></interceptor-ref>
+    	</action>
+    </package>
+</struts>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC  
+        "-//Apache Struts//XWork Validator 1.0.2//EN"  
+        "http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">  
+<validators>
+	<field name="user.userName">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>用户名必填</message>
+		</field-validator>
+	</field>
+	<field name="user.userId">
+		<field-validator type="required">
+			<message>用户ID必填</message>
+		</field-validator>
+	</field>
+	<field name="user.userPass">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>密码必填</message>
+		</field-validator>
+	</field>
+	<field name="rePass">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>请确认密码</message>
+		</field-validator>
+	</field>
+	<field name="user.userAge">
+		<field-validator type="int">
+			<param name="min">1</param>
+			<param name="max">100</param>
+			<message>你输入的年龄在${min}到${max}之间</message>
+		</field-validator>
+	</field>
+	<field name="user.userBirth">
+		<field-validator type="date">
+			<param name="min">1900-01-01</param>
+			<param name="max">2050-01-01</param>
+			<message>你输入的出生日期必须在1900年1月1日到2050年1月1日之间</message>
+		</field-validator>
+	</field>
+	<field name="user.userHigh">
+		<field-validator type="double">
+			<param name="minExclusive">1.0</param>
+			<param name="maxExclusive">2.2</param>
+			<message>身高必须在${minExclusive}到${maxExclusive}之间</message>
+		</field-validator>
+	</field>  
+	<field name="user.userMail">  
+	   <field-validator type="email">  
+	         <message>你的电子邮件地址必须是一个有效的电邮地址</message>  
+	   </field-validator>  
+	</field>
+	<field name="rePass">
+		<field-validator type="fieldexpression">
+			<param name="expression">rePass==user.userPass</param>
+			<message>输入密码不一致 </message>
+		</field-validator>
+	</field>
+</validators>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "struts-2.1.7.dtd" >
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.ui.theme" value="simple"/>
+    
+    <constant name="struts.action.extension" value="do"></constant>
+    
+    <package name="base-pkg" abstract="true" extends="struts-default"></package>
+    <package name="detail-pkg" namespace="/detail" extends="base-pkg">
+    	<action name="toInput" class="fjnu.edu.action.DetailAction" method="toInput">
+    		<result name="input">/detail_input.jsp</result>
+    	</action>
+    	<action name="detail" class="fjnu.edu.action.DetailAction" method="detail">
+    		<result name="success">/input_success.jsp</result>
+    		<result name="input">/detail_input.jsp</result>
+    	</action>
+    </package>
+</struts>

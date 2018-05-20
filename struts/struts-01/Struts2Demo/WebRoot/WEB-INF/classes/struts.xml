@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+	"http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+    <!-- 常量对struts2框架的一些全局属性进行设置 -->
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.ui.theme" value="simple"/>   
+    <!--  
+    
+             所有以*.do结尾的请求，都属于struts2请求，struts2才启动去处理
+            如果你的原有系统的请求路径后缀不是*.do,那么struts2将不介入，保持沉默，这样struts2就是一个低侵入性的系统。
+     -->
+    <constant name="struts.action.extension" value="do"></constant>  <!-- 如果没有显式配置，默认是action -->
+    
+  
+    <package name="mypkg" namespace="/sample" extends="struts-default">
+       <action name="demo" class="edu.fjnu.action.DemoAction">
+       	 <result name="right">../right.jsp</result>
+         <result name="input">../login.jsp</result>
+       </action>
+       
+       <action name="toInput" class="edu.fjnu.action.DemoAction" method="toInput">
+         <result name="input">../login.jsp</result>
+       </action>
+    </package>
+
+</struts>
+

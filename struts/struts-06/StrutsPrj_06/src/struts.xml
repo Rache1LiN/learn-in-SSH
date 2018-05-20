@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "struts-2.1.7.dtd" >
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.ui.theme" value="simple"/>
+    
+    <constant name="struts.action.extension" value="do"></constant>
+    
+    <package name="base-pkg" abstract="true" extends="struts-default"></package>
+    <package name="pet-pkg" namespace="/pet" extends="base-pkg">
+    	<action name="mainMenu" class="edu.fjnu.action.PetAction" method="mainMenu">
+    		<result name="main_menu">/jsps/main_menu.jsp</result>
+    	</action>
+    	<action name="login" class="edu.fjnu.action.PetAction" method="login">
+    		<result name="main_menu">/jsps/main_menu.jsp</result>
+    	</action>
+    	<action name="addPet" class="edu.fjnu.action.PetAction" method="addPet">
+    		<result name="adapt_pet">/jsps/pet_adapt.jsp</result>
+    	</action>
+    	<action name="selfPet" class="edu.fjnu.action.PetAction" method="selfPet">
+    		<result name="self_pet">/jsps/self_pet.jsp</result>
+    	</action>
+    	<action name="createPet" class="edu.fjnu.action.PetAction" method="createPet">
+    	</action>
+    	<action name="search" class="edu.fjnu.action.PetAction" method="search">
+    		<result name="search_pet">/jsps/pet_search.jsp</result>
+    	</action>
+    </package>
+</struts>

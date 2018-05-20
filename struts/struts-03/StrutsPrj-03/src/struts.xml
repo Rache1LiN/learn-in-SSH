@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "struts-2.1.7.dtd" >
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.ui.theme" value="simple"/>
+    
+    <constant name="struts.action.extension" value="do"></constant>
+    <constant name="struts.i18n.encoding" value="utf-8" ></constant>
+    <constant name="struts.custom.i18n.resources" value="global"></constant>
+    
+    <package name="base-pkg" abstract="true" extends="struts-default"></package>
+    <package name="login-pkg" namespace="/login" extends="base-pkg">
+    	<action name="toInput" class="fjnu.edu.action.LoginAction" method="toInput">
+    		<result name="input">../jsps/login_input.jsp</result>
+    	</action>
+    	<action name="login" class="fjnu.edu.action.LoginAction" method="login">
+    		<result name="success">../jsps/login_success.jsp</result>
+    		<result name="input">../jsps/login_input.jsp</result>
+    	</action>
+    	<action name="language">
+            <result>../jsps/login_input.jsp</result>
+        </action>
+    </package>
+    <package name="register-pkg" namespace="/register" extends="base-pkg">
+    	<action name="toInput" class="fjnu.edu.action.RegisterAction" method="toInput">
+    		<result name="input">../jsps/register_input.jsp</result>
+    	</action>
+    	<action name="register" class="fjnu.edu.action.RegisterAction" method="register">
+    		<result name="success">../jsps/register_success.jsp</result>
+    		<result name="input">../jsps/register_input.jsp</result>
+    	</action>
+    	
+    </package>
+</struts>
