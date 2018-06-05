@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fjnu.mapper.MemberMapper">
+	<resultMap type="Member" id="MemberResult">
+		<id property="memberId" column="member_id" javaType="java.lang.Long"></id>
+		<result property="memberName" column="member_name" javaType="java.lang.String"></result>
+		<result property="memberPass" column="member_pass" javaType="java.lang.String"></result>
+		<result property="realName" column="real_name" javaType="java.lang.String"></result>
+		<result property="memberEmail" column="member_email" javaType="java.lang.String"></result>
+		<result property="memberAddress" column="member_address" javaType="java.lang.String"></result>
+		<result property="memberPhone" column="member_phone" javaType="java.lang.String"></result>
+		<result property="memberStatus" column="member_status" javaType="java.lang.Integer"></result>
+		<result property="memberCode" column="member_code" javaType="java.lang.String"></result>
+		<collection property="orderList" column="member_id" select="edu.fjnu.mapper.OrderMapper.selectOrderByMemberId"></collection>
+	</resultMap>
+	<insert id="insertMember" parameterType="edu.fjnu.bean.Member">
+	   <selectKey order="BEFORE" keyProperty="memberId" resultType="Long">  
+	       select seq_member_id.nextval from dual
+	   </selectKey> 
+	    insert into member (member_id,member_name,member_pass,real_name,member_email,member_address,member_phone,member_status)
+	    values (#{memberId},#{memberName}, #{memberPass}, #{realName},#{memberEmail},#{memberAddress},#{memberPhone},#{memberStatus})
+	</insert>
+	
+	<update id="updateMember" parameterType="edu.fjnu.bean.Member">
+      update Member set member_name=#{memberName},member_pass=#{memberPass},real_name=#{realName},member_email=#{memberEmail},member_address=#{memberAddress},member_phone=#{memberPhone},member_status=#{memberStatus} where member_id=#{memberId}
+    </update>
+    
+    <delete id="deleteMember" parameterType="Long">
+     delete from member where member_id=#{memberId}  
+    </delete>
+    
+    <select id="selectAllMember" resultMap="MemberResult" resultType="edu.fjnu.bean.Member">
+    select * from member
+    </select>
+    
+    <select id="selectMemberById" parameterType="Long" resultMap="MemberResult" resultType="edu.fjnu.bean.Member">
+        select * from member where member_id = #{memberId}
+    </select>
+    
+    <select id="selectMemberByName" parameterType="String" resultMap="MemberResult" resultType="edu.fjnu.bean.Member">
+        select * from member where member_name like #{memberName}
+    </select>
+</mapper>

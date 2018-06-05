@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fjnu.mapper.OrderDetailMapper">
+	<resultMap type="OrderDetail" id="OrderDetailResult">
+		<id property="detailId" column="detail_id" javaType="java.lang.Long"></id>
+		<result property="goodsId" column="goods_id" javaType="java.lang.Long"></result>
+		<result property="orderId" column="order_id" javaType="java.lang.Long"></result>
+		<result property="detailAmount" column="detail_amount" javaType="java.lang.Integer"></result>
+		<result property="detailPrice" column="detail_price" javaType="java.lang.Double"></result>
+		<result property="isSettled" column="is_settled" javaType="java.lang.Integer"></result>
+		<association property="goods" resultMap="edu.fjnu.mapper.GoodsMapper.GoodsResult"></association>
+		<association property="order" resultMap="edu.fjnu.mapper.OrderMapper.OrderResult"></association>
+	</resultMap>
+	<insert id="insertOrderDetail" parameterType="edu.fjnu.bean.OrderDetail">
+	   <selectKey order="BEFORE" keyProperty="detailId">  
+	       select seq_detail_id.nextval from dual
+	   </selectKey> 
+	    insert into order_detail (goods_id,order_id,detail_amount,detail_price,is_settled)
+	    values (#{goodsId}, #{orderId}, #{detailAmount},#{detailPrice},#{isSettled})
+	</insert>
+	
+	<update id="updateOrderDetail" parameterType="edu.fjnu.bean.OrderDetail">
+      update order_detail set goods_id=#{goodsId},order_id=#{orderId},detail_amount=#{detailAmount},detail_price=#{detailPrice},is_settled=#{isSettled} where detail_id=#{detailId}
+    </update>
+    
+    <delete id="deleteOrderDetail" parameterType="Long">
+     delete from order_detail where detail_id=#{detailId}  
+    </delete>
+    
+    <select id="selectAllOrderDetail" resultMap="OrderDetailResult" resultType="edu.fjnu.bean.OrderDetail">
+    select * from order_detail
+    </select>
+    
+    <select id="selectOrderDetailById" parameterType="Long" resultMap="OrderDetailResult" resultType="edu.fjnu.bean.OrderDetail">
+        select * from order_detail where detail_id = #{detailId}
+    </select>
+    
+    <select id="selectOrderDetailByOrderId" parameterType="Long" resultMap="OrderDetailResult" resultType="edu.fjnu.bean.OrderDetail">
+    	select * from order_detail where order_id = #{orderId}
+    </select>
+
+</mapper>

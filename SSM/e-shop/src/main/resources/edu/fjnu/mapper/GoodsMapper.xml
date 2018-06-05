@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fjnu.mapper.GoodsMapper">
+	<resultMap type="Goods" id="GoodsResult">
+		<id property="goodsId" column="goods_id" javaType="java.lang.Long"></id>
+		<result property="goodsName" column="goods_name" javaType="java.lang.String"></result>
+		<result property="goodsPrice" column="goods_price" javaType="java.lang.Double"></result>
+		<result property="marketPrice" column="market_price" javaType="java.lang.Double"></result>
+		<result property="goodsDescription" column="goods_description" javaType="java.lang.String"></result>
+		<result property="goodsPicture" column="goods_picture" javaType="java.lang.String"></result>
+		<result property="subId" column="sub_id" javaType="java.lang.Integer"></result>
+		<association property="subCategory" resultMap="edu.fjnu.mapper.SubCategoryMapper.SubCategoryResult"></association>
+	</resultMap>
+	<insert id="insertGoods" parameterType="edu.fjnu.bean.Goods">
+	   <selectKey order="BEFORE" keyProperty="goodsId">  
+	       select seq_goods_id.nextval from dual
+	   </selectKey> 
+	    insert into goods (goods_name,goods_price,market_price,goods_description,goods_picture,sub_id)
+	    values (#{goodsName}, #{goodsPrice}, #{marketPrice},#{goodsDescription},#{goodsPicture},#{subId})
+	</insert>
+	
+	<update id="updateGoods" parameterType="edu.fjnu.bean.Goods">
+      update goods set goods_name=#{goodsName},goods_price=#{goodsPrice},market_price=#{marketPrice},goods_description=#{goodsDescription},goods_picture=#{goodsPicture},sub_id=#{subId} where goods_id=#{goodsId}
+    </update>
+    
+    <delete id="deleteGoods" parameterType="Long">
+     delete from goods where goods_id=#{goodsId}  
+    </delete>
+    
+    <select id="selectAllGoods" resultMap="GoodsResult" resultType="edu.fjnu.bean.Goods">
+    select * from goods
+    </select>
+    
+    <select id="selectGoodsById" parameterType="Long" resultMap="GoodsResult" resultType="edu.fjnu.bean.Goods">
+        select * from goods where goods_id = #{goodsId}
+    </select>
+    
+    <select id="selectGoodsByName" parameterType="String" resultMap="GoodsResult" resultType="edu.fjnu.bean.Goods">
+        select * from goods where goods_name like #{goodsName}
+    </select>
+    
+    <select id="selectGoodsBySubId" parameterType="int" resultMap="GoodsResult" resultType="edu.fjnu.bean.Goods">
+    	select * from goods where sub_id = #{subId}
+    </select>
+</mapper>

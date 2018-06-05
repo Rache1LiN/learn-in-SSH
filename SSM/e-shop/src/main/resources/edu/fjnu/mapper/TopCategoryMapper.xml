@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fjnu.mapper.TopCategoryMapper">
+	<resultMap type="TopCategory" id="TopCategoryResult">
+		<id property="topId" column="top_id" javaType="java.lang.Integer"></id>
+		<result property="topName" column="top_name" javaType="java.lang.String"></result>
+		<collection property="subList" column="top_id" select="edu.fjnu.mapper.SubCategoryMapper.selectSubCategoryByTopId"></collection>
+	</resultMap>
+	<insert id="insertTopCategory" parameterType="edu.fjnu.bean.TopCategory">
+	    insert into top_category (top_id,top_name)
+	    values (#{topId}, #{topName})
+	</insert>
+	
+	<update id="updateTopCategory" parameterType="edu.fjnu.bean.TopCategory">
+      update top_category set top_name=#{topName} where top_id=#{topId}
+    </update>
+    
+    <delete id="deleteTopCategory" parameterType="int">
+     delete from top_category where top_id=#{topId}  
+    </delete>
+    
+    <select id="selectAllTopCategory" resultMap="TopCategoryResult" resultType="edu.fjnu.bean.TopCategory">
+    select * from top_category
+    </select>
+    
+    <select id="selectTopCategoryById" parameterType="int" resultMap="TopCategoryResult" resultType="edu.fjnu.bean.TopCategory">
+        select * from top_category where top_id = #{topId}
+    </select>
+    
+	<select id="selectTopCategoryByName" parameterType="String" resultMap="TopCategoryResult" resultType="edu.fjnu.bean.TopCategory">
+        select * from top_category where top_name like #{topName}
+    </select>
+</mapper>

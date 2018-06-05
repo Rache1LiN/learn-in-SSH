@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fjnu.mapper.OrderMapper">
+	<resultMap type="Order" id="OrderResult">
+		<id property="orderId" column="order_id" javaType="java.lang.Long"></id>
+		<result property="orderDate" column="order_date" javaType="java.sql.Date"></result>
+		<result property="orderTotal" column="order_total" javaType="java.lang.Double"></result>
+		<result property="orderStatus" column="order_status" javaType="java.lang.Integer"></result>
+		<result property="orderAddress" column="order_address" javaType="java.lang.String"></result>
+		<result property="orderPhone" column="order_phone" javaType="java.lang.String"></result>
+		<result property="orderReciever" column="order_reciever" javaType="java.lang.String"></result>
+		<result property="memberId" column="member_id" javaType="java.lang.Long"></result>
+		<association property="member" resultMap="edu.fjnu.mapper.MemberMapper.MemberResult"></association>
+		<collection property="orderDetailList" column="order_id" select="edu.fjnu.mapper.OrderDetailMapper.selectOrderDetailByOrderId"></collection>
+	</resultMap>
+	<insert id="insertOrder" parameterType="edu.fjnu.bean.Order">
+	   <selectKey order="BEFORE" keyProperty="orderId">  
+	       select seq_order_id.nextval from dual
+	   </selectKey> 
+	    insert into tbl_order (order_date,order_status,order_address,order_phone,order_reciever,member_id)
+	    values (#{orderDate}, #{orderStatus}, #{orderAddress},#{orderPhone},#{orderReciever},#{memberId})
+	</insert>
+	
+	<update id="updateOrder" parameterType="edu.fjnu.bean.Order">
+      update tbl_order set order_date=#{orderDate},order_status=#{orderStatus},order_address=#{orderAddress},order_phone=#{orderPhone},order_reciever=#{orderReciever},member_id=#{memberId} where order_id=#{orderId}
+    </update>
+    
+    <delete id="deleteOrder" parameterType="Long">
+     delete from tbl_order where order_id=#{orderId}  
+    </delete>
+    
+    <select id="selectAllOrder" resultMap="OrderResult" resultType="edu.fjnu.bean.Order">
+    select * from tbl_order
+    </select>
+    
+    <select id="selectOrderById" parameterType="Long" resultMap="OrderResult" resultType="edu.fjnu.bean.Order">
+        select * from tbl_order where order_id = #{orderId}
+    </select>
+    
+    <select id="selectOrderByMemberId" parameterType="Long" resultMap="OrderResult" resultType="edu.fjnu.bean.Order">
+    	select * from tbl_order where member_id = #{memberId}
+    </select>
+
+</mapper>

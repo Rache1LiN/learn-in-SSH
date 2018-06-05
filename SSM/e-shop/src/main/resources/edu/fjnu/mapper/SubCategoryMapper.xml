@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.fjnu.mapper.SubCategoryMapper">
+	<resultMap type="SubCategory" id="SubCategoryResult">
+		<id property="subId" column="sub_id" javaType="java.lang.Integer"></id>
+		<result property="subName" column="sub_name" javaType="java.lang.String"></result>
+		<result property="topId" column="top_id" javaType="java.lang.Integer"></result>
+		<association property="topCategory" resultMap="edu.fjnu.mapper.TopCategoryMapper.TopCategoryResult">
+		</association>
+		<collection property="goodsList" column="sub_id" select="edu.fjnu.mapper.GoodsMapper.selectGoodsBySubId"></collection>
+	</resultMap>
+	<insert id="insertSubCategory" parameterType="edu.fjnu.bean.SubCategory">
+	    insert into sub_category (sub_id,sub_name,top_id)
+	    values (#{subId}, #{subName}, #{topId})
+	</insert>
+	
+	<update id="updateSubCategory" parameterType="edu.fjnu.bean.SubCategory">
+      update sub_category set sub_id=#{subId},sub_name=#{subName},top_id=#{topId} where sub_id=#{subId}
+    </update>
+    
+    <delete id="deleteSubCategory" parameterType="int">
+     delete from sub_category where sub_id=#{subId}  
+    </delete>
+    
+    <select id="selectAllSubCategory" resultMap="SubCategoryResult" resultType="edu.fjnu.bean.SubCategory">
+    select * from sub_category
+    </select>
+    
+    <select id="selectSubCategoryById" parameterType="int" resultMap="SubCategoryResult" resultType="edu.fjnu.bean.SubCategory">
+        select * from sub_category where sub_id = #{subId}
+    </select>
+    
+	<select id="selectSubCategoryByName" parameterType="String" resultMap="SubCategoryResult" resultType="edu.fjnu.bean.SubCategory">
+        select * from sub_category where sub_name like #{subName}
+    </select>
+    
+    <select id="selectSubCategoryByTopId" parameterType="int" resultMap="SubCategoryResult" resultType="edu.fjnu.bean.SubCategory">
+        select * from sub_category where top_id = #{topId}
+    </select>
+</mapper>
